@@ -5,6 +5,9 @@ import helmet from 'helmet';
 
 // other dependencies
 import config from './config/envServer';
+import root from './routes/root';
+import userAPI from './routes/api/users';
+
 import Response from './utils/log';
 import ServerError from './utils/error';
 
@@ -29,6 +32,9 @@ app.use(cacheResponse);
 app.use(helmet());
 
 // routes
+app.use('/', root);
+app.use('/api/user', userAPI);
+
 app.use((req, res, next) => {
     next(
         new ServerError('error not found', 404, 'ClientError').response(
