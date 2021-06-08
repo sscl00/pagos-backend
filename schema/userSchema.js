@@ -1,13 +1,11 @@
-// import Joi from 'joi';
-const Joi = require('joi')
-    .extend(require('@joi/date'));
+import Joi from 'joi';
 
 const userSchema = Joi.object({
     first_name: Joi.string().required(),
     last_name: Joi.string().required(),
     user_name: Joi.string().required(),
-    email: Joi.string().email().required(),
-    birthday: Joi.date().format('DD-MM-YYYY').required(),
+    email: Joi.string(),
+    birthday: Joi.date().required(),
     contact_phone: Joi.array().items(
         Joi.object({
             label: Joi.string().required(),
