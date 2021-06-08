@@ -1,6 +1,8 @@
 // dependencies router
 import express from 'express';
 import ResourcesService from '../../services/ResourcesService';
+import validation from '../../middleware/validationHandlers';
+import UserSchema from '../../schema/userSchema';
 
 // other dependencies
 import Response from '../../utils/log';
@@ -8,6 +10,7 @@ import Response from '../../utils/log';
 // routes configuration
 const router = express.Router();
 const service = new ResourcesService('User');
+const { filterUserSchema } = UserSchema
 
 router.get(
     '/',
@@ -23,4 +26,17 @@ router.get(
     }
 );
 
+router.get(
+    '/:filter',
+    validation(filterUserSchema, 'params'),
+    async (req, res, next) => {
+        try {
+            const [user] = await service.getResource(req.params);
+            user ? Response.success('user listed') : Response.error(`No se encontraron coincidencias: ${req.params.filter}`);
+            res.status(200).send(user);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
 export default router;
