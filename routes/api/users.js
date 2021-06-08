@@ -10,7 +10,7 @@ import Response from '../../utils/log';
 // routes configuration
 const router = express.Router();
 const service = new ResourcesService('User');
-const { filterUserSchema } = UserSchema
+const { userSchema, filterUserSchema } = UserSchema
 
 router.get(
     '/',
@@ -39,4 +39,18 @@ router.get(
         }
     }
 );
+
+// create new user
+router.post(
+    '/', 
+    validation(userSchema),
+    async (req, res, next) => {
+    try {
+        const userCreated = service.createResource(req.body);
+        Response.success('user created');
+        res.status(201).send(userCreated);
+    } catch (error) {
+        next(error);
+    }
+});
 export default router;
