@@ -94,4 +94,5 @@ export default class ResourcesService {
             throw error;
         }
     }
+
 }

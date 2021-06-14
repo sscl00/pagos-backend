@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import config from './config/envServer';
 import root from './routes/root';
 import userAPI from './routes/api/users';
+import paymentAPI from './routes/api/pagos';
 
 import Response from './utils/log';
 import ServerError from './utils/error';
@@ -34,6 +35,7 @@ app.use(helmet());
 // routes
 app.use('/', root);
 app.use('/api/user', userAPI);
+app.use('/api/payment', paymentAPI);
 
 app.use((req, res, next) => {
     next(

@@ -31,6 +31,7 @@ router.get(
     validation(filterUserSchema, 'params'),
     async (req, res, next) => {
         try {
+            console.log(`no lo se ${JSON.stringify (req.params)}`)
             const [user] = await service.getResource(req.params);
             user ? Response.success('user listed') : Response.error(`No se encontraron coincidencias: ${req.params.filter}`);
             res.status(200).send(user);
@@ -46,6 +47,10 @@ router.post(
     validation(userSchema),
     async (req, res, next) => {
     try {
+        // const filter = {
+        //     filter: req.body.email
+        // };
+        // const [user] = await service.getResource(filter);
         const userCreated = service.createResource(req.body);
         Response.success('user created');
         res.status(201).send(userCreated);
