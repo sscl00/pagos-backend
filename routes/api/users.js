@@ -40,6 +40,19 @@ router.get(
     }
 );
 
+router.get(
+    '/id/:filter',
+    async (req, res, next) => {
+        try {
+            const [user] = await service.getResourceByID(req.params);
+            user ? Response.success('user listed') : Response.error(`No se encontraron coincidencias: ${req.params.filter}`);
+            res.status(200).send(user);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 // create new user
 router.post(
     '/', 

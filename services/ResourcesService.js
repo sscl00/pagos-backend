@@ -1,6 +1,8 @@
 // dependencies ResourcesService
 import MongoLib from '../libs/mongo';
 
+const ObjectID = require('mongodb').ObjectID; 
+
 // other dependencies
 import Response from '../utils/log';
 
@@ -37,6 +39,35 @@ export default class ResourcesService {
                 query,
                 projection
             );
+            return resource;
+        } catch (error) {
+            Response.error(error);
+            throw error;
+        }
+    }
+
+    /**
+     * fetch all documents collection
+     * if exist filter, fetch all documentos collection depending of text search
+     * @param {[{filter: string, fields: array<string>, username: string}={}]} - for text search , projection
+     * @throws {ErrorObject}
+     * @returns {array} - response query mongoDB as array
+     */
+     async getResourceByID({ filter, fields, username: user_name } = {}) {
+        try {
+            const query = {_id: ObjectID(filter)};
+            const projection =
+                fields &&
+                fields.reduce((projection, field) => {
+                    projection[field] = 1;
+                    return projection;
+                }, {});
+            const resource = await this.mongoDB.get(
+                this.collection,
+                query,
+                projection
+            );
+            console.log(resource);
             return resource;
         } catch (error) {
             Response.error(error);
