@@ -4,7 +4,7 @@
   "description": "Server Application for Pagos UNICA",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test jest test/index.test.js --detectOpenHandles --forceExit --silent --verbose",
     "dev": "nodemon --exec babel-node -r dotenv/config index"
   },
   "repository": {
@@ -39,6 +39,8 @@
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "joi": "^17.4.0",
+    "joi-objectid": "^3.0.1",
+    "joi-oid": "^1.1.2",
     "mongodb": "^3.6.8"
   },
   "babel": {
